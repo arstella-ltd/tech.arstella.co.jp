@@ -1,5 +1,8 @@
 name = "tech-arstella-co-jp"
 compatibility_date = "2025-03-25"
+routes = [
+  { pattern = "tech.arstella.co.jp", custom_domain = true }
+]
 
 [assets]
 directory = "./dist"
