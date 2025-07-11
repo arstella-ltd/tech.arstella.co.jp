@@ -11,7 +11,7 @@
 ## Phase 1: 最小限の構成で早期デプロイ（1-2日）
 
 ### 初期セットアップ
-- [ ] pnpmのインストール確認（`pnpm --version`）
+- [x] pnpmのインストール確認（`pnpm --version`）
 - [ ] GitHub Organization「arstella」の作成
   - [ ] Organization設定（プロフィール、ロゴ等）
   - [ ] メンバーの招待（必要に応じて）
