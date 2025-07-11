@@ -22,7 +22,7 @@
 - [x] Astroプロジェクトの初期化（`pnpm create astro@latest`）
 - [ ] 最小限の構成
   - [x] TypeScript有効化
-  - [ ] TailwindCSS追加
+  - [x] TailwindCSS追加
   - [ ] content collectionsの設定
 
 ### 最小限のページ作成
