@@ -21,7 +21,7 @@
   - [x] 簡易READMEの作成
 - [x] Astroプロジェクトの初期化（`pnpm create astro@latest`）
 - [ ] 最小限の構成
-  - [ ] TypeScript有効化
+  - [x] TypeScript有効化
   - [ ] TailwindCSS追加
   - [ ] content collectionsの設定
 
