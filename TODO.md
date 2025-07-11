@@ -12,9 +12,9 @@
 
 ### 初期セットアップ
 - [x] pnpmのインストール確認（`pnpm --version`）
-- [ ] GitHub Organization「arstella」の作成
-  - [ ] Organization設定（プロフィール、ロゴ等）
-  - [ ] メンバーの招待（必要に応じて）
+- [x] GitHub Organization「arstella」の作成
+  - [x] Organization設定（プロフィール、ロゴ等）
+  - [x] メンバーの招待（必要に応じて）
 - [ ] GitHubリポジトリの作成（arstella/tech.arstella.co.jp）
   - [ ] Publicリポジトリとして作成
   - [ ] .gitignoreの設定（node_modules、dist、.env等）
