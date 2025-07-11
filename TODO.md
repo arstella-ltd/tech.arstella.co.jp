@@ -15,10 +15,10 @@
 - [x] GitHub Organization「arstella」の作成
   - [x] Organization設定（プロフィール、ロゴ等）
   - [x] メンバーの招待（必要に応じて）
-- [ ] GitHubリポジトリの作成（arstella/tech.arstella.co.jp）
-  - [ ] Publicリポジトリとして作成
-  - [ ] .gitignoreの設定（node_modules、dist、.env等）
-  - [ ] 簡易READMEの作成
+- [x] GitHubリポジトリの作成（arstella/tech.arstella.co.jp）
+  - [x] Publicリポジトリとして作成
+  - [x] .gitignoreの設定（node_modules、dist、.env等）
+  - [x] 簡易READMEの作成
 - [ ] Astroプロジェクトの初期化（`pnpm create astro@latest`）
 - [ ] 最小限の構成
   - [ ] TypeScript有効化
