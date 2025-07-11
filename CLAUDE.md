@@ -4,3 +4,6 @@
 
 ## Communication
 - 日本語で会話して
+
+## Task Management
+- タスクが完了したらTODOをチェックして
