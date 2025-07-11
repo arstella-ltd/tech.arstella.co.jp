@@ -23,7 +23,7 @@
 - [ ] 最小限の構成
   - [x] TypeScript有効化
   - [x] TailwindCSS追加
-  - [ ] content collectionsの設定
+  - [x] content collectionsの設定
 
 ### 最小限のページ作成
 - [ ] シンプルなホームページ（/）
