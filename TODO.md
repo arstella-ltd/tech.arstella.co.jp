@@ -20,7 +20,7 @@
   - [x] .gitignoreの設定（node_modules、dist、.env等）
   - [x] 簡易READMEの作成
 - [x] Astroプロジェクトの初期化（`pnpm create astro@latest`）
-- [ ] 最小限の構成
+- [x] 最小限の構成
   - [x] TypeScript有効化
   - [x] TailwindCSS追加
   - [x] content collectionsの設定
