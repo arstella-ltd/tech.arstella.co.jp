@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => {
+    return !data.draft;
+  });
+  
+  const categories = [...new Set(posts.map(post => post.data.category))];
+  
+  return categories.map(category => ({
+    params: { category },
+    props: {
+      posts: posts.filter(post => post.data.category === category)
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    }
+  }));
+}
+
+const { category } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`${category}`} description={`カテゴリー「${category}」の記事一覧`}>
+  <main>
+    <section>
+      <div class="category-header">
+        <a href="/categories/" class="back-link">← カテゴリー一覧へ</a>
+        <h1>カテゴリー: {category}</h1>
+        <p class="post-count">{posts.length}件の記事</p>
+      </div>
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.slug}/`}>
+              <h4 class="title">{post.data.title}</h4>
+              <p class="date">
+                {post.data.pubDate.toLocaleDateString('ja-JP')}
+              </p>
+              <p class="description">{post.data.description}</p>
+              {post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map(tag => (
+                    <span class="tag">#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: 960px;
+    margin: 0 auto;
+    padding: 3rem 0;
+  }
+  
+  section {
+    padding: 0 1.5rem;
+  }
+  
+  .category-header {
+    margin-bottom: 3rem;
+  }
+  
+  .back-link {
+    display: inline-block;
+    color: #6c757d;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .back-link:hover {
+    color: #495057;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  
+  .post-count {
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 2rem;
+  }
+  
+  ul li a {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e9ecef;
+  }
+  
+  ul li a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    margin: 0 0 0.5rem 0;
+    color: #212529;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .date {
+    margin: 0 0 0.5rem 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .description {
+    margin: 0 0 1rem 0;
+    color: #495057;
+    line-height: 1.6;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 72rem) {
+    main {
+      width: 100%;
+      max-width: 960px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    ul li a {
+      padding: 1rem;
+    }
+    
+    .title {
+      font-size: 1.25rem;
+    }
+  }
+</style>

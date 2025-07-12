@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// すべての公開済みブログ記事を取得
+const posts = (await getCollection('blog', ({ data }) => {
+  return !data.draft;
+}));
+
+// タグごとに記事をグループ化
+const tagsMap = new Map<string, typeof posts>();
+
+posts.forEach(post => {
+  post.data.tags.forEach(tag => {
+    if (!tagsMap.has(tag)) {
+      tagsMap.set(tag, []);
+    }
+    tagsMap.get(tag)!.push(post);
+  });
+});
+
+// タグを配列に変換して記事数でソート
+const tags = Array.from(tagsMap.entries())
+  .map(([name, posts]) => ({ name, count: posts.length }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<BaseLayout title="タグ一覧" description="ブログ記事のタグ一覧">
+  <main>
+    <section>
+      <h1>タグ一覧</h1>
+      <div class="tags-cloud">
+        {tags.map(({ name, count }) => (
+          <a href={`/tags/${encodeURIComponent(name)}/`} class="tag-item">
+            <span class="tag-name">#{name}</span>
+            <span class="tag-count">{count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: 960px;
+    margin: 0 auto;
+    padding: 3rem 0;
+  }
+  
+  section {
+    padding: 0 1.5rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 3rem;
+  }
+  
+  .tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 9999px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+  
+  .tag-item:hover {
+    transform: translateY(-2px);
+    background-color: #e9ecef;
+  }
+  
+  .tag-name {
+    color: #212529;
+    font-weight: 500;
+  }
+  
+  .tag-count {
+    background: #e9ecef;
+    color: #6c757d;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 72rem) {
+    main {
+      width: 100%;
+      max-width: 960px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    .tags-cloud {
+      gap: 0.5rem;
+    }
+    
+    .tag-item {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>

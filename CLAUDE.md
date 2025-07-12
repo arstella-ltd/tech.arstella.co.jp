@@ -7,3 +7,9 @@
 
 ## Task Management
 - タスクが完了したらTODOをチェックして
+
+## Verification
+- 検証はdevではなくbuildで行って
+
+## Build
+- ビルドはpnpm build
