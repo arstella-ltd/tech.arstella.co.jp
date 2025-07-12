@@ -7,8 +7,6 @@ category: 'Web開発'
 tags: ['astro', 'tailwindcss', 'static-site-generator']
 ---
 
-# AstroとTailwindCSSで技術ブログを構築する
-
 このブログは、Astro v5とTailwindCSSを使用して構築されています。今回は、その構築手順と選定理由について解説します。
 
 ## なぜAstroを選んだのか

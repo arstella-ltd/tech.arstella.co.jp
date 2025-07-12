@@ -9,8 +9,6 @@ tags: ['TypeScript', 'JavaScript', 'ベストプラクティス']
 draft: false
 ---
 
-# TypeScriptでより安全なコードを書くためのベストプラクティス
-
 TypeScriptを導入することで、JavaScriptに静的型付けの恩恵をもたらすことができます。しかし、単にTypeScriptを使うだけでは、その真の力を発揮できません。今回は、より安全で保守性の高いコードを書くためのベストプラクティスを紹介します。
 
 ## 1. strictモードを有効にする
