@@ -1,0 +1,13 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="200" height="200" rx="100" fill="#E5E7EB"/>
+  
+  <!-- 人物アイコン -->
+  <g transform="translate(100, 100)">
+    <!-- 頭 -->
+    <circle cx="0" cy="-15" r="30" fill="#9CA3AF"/>
+    
+    <!-- 体 -->
+    <path d="M -40 40 C -40 20, -25 10, 0 10 C 25 10, 40 20, 40 40" fill="#9CA3AF"/>
+  </g>
+</svg>
