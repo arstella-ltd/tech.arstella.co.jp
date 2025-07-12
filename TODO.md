@@ -49,9 +49,9 @@
 ## Phase 2: 基本機能の追加（1週間）
 
 ### SEO基本対策
-- [ ] メタタグの設定（astro-seo）
+- [x] メタタグの設定（astro-seo）
 - [ ] sitemap.xmlの自動生成（@astrojs/sitemap）
-- [ ] robots.txtの設定
+- [x] robots.txtの設定
 
 ### ブログ機能の強化
 - [ ] カテゴリー・タグ機能
