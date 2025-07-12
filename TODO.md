@@ -26,14 +26,14 @@
   - [x] content collectionsの設定
 
 ### Cloudflare Pagesへのデプロイ
-- [ ] Cloudflare Pagesプロジェクトの作成
-- [ ] GitHubリポジトリの連携
-- [ ] ビルド設定
-  - [ ] ビルドコマンド: `pnpm install && pnpm build`
-  - [ ] ビルド出力ディレクトリ: `dist`
-  - [ ] 環境変数でPNPM_VERSION指定（必要に応じて）
-- [ ] カスタムドメイン（tech.arstella.co.jp）の設定
-- [ ] 初回デプロイの確認
+- [x] Cloudflare Pagesプロジェクトの作成
+- [x] GitHubリポジトリの連携
+- [x] ビルド設定
+  - [x] ビルドコマンド: `pnpm install && pnpm build`
+  - [x] ビルド出力ディレクトリ: `dist`
+  - [x] ~~環境変数でPNPM_VERSION指定（必要に応じて）~~ → 静的サイトのため不要と判断
+- [x] カスタムドメイン（tech.arstella.co.jp）の設定
+- [x] 初回デプロイの確認
 
 ### 最小限のページ作成
 - [ ] シンプルなホームページ（/）
