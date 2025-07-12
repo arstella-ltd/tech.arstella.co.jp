@@ -15,7 +15,13 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content, headings } = await post.render();
+const { Content, headings: rawHeadings } = await post.render();
+
+// 見出しから#記号を除去
+const headings = rawHeadings?.map(heading => ({
+  ...heading,
+  text: heading.text.replace(/\s*#\s*$/, '').trim()
+})) || [];
 ---
 
 <BaseLayout 

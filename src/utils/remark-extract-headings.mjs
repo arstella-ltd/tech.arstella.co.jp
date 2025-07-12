@@ -9,11 +9,13 @@ export function remarkExtractHeadings() {
 
     visit(tree, 'heading', (node) => {
       const text = toString(node);
-      const slug = slugger.slug(text);
+      // #記号を除去（もし含まれていた場合）
+      const cleanText = text.replace(/^#+\s*/, '').replace(/\s*#*$/, '');
+      const slug = slugger.slug(cleanText);
       
       headings.push({
         depth: node.depth,
-        text,
+        text: cleanText,
         slug,
       });
     });

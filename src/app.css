@@ -2,27 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 見出しのアンカーリンクスタイル */
-.anchor-link {
-  @apply no-underline;
+/* 見出しのアンカーアイコンスタイル */
+.anchor-icon {
+  @apply ml-2 no-underline;
 }
 
-.anchor-link:hover {
-  @apply text-indigo-600;
+.anchor-icon-symbol {
+  @apply text-gray-400 opacity-0 transition-opacity duration-200;
 }
 
-/* 見出しのホバー時にリンクアイコンを表示 */
-.prose h2 .anchor-link::after,
-.prose h3 .anchor-link::after,
-.prose h4 .anchor-link::after {
-  content: '#';
-  @apply ml-2 text-gray-400 opacity-0 transition-opacity;
-}
-
-.prose h2:hover .anchor-link::after,
-.prose h3:hover .anchor-link::after,
-.prose h4:hover .anchor-link::after {
+/* 見出しのホバー時にアイコンを表示 */
+.prose h2:hover .anchor-icon-symbol,
+.prose h3:hover .anchor-icon-symbol,
+.prose h4:hover .anchor-icon-symbol {
   @apply opacity-100;
+}
+
+.anchor-icon:hover .anchor-icon-symbol {
+  @apply text-indigo-600 opacity-100;
 }
 
 /* プロースタイル（ブログ記事用） */

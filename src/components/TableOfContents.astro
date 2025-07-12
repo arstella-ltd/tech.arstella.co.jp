@@ -17,18 +17,20 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
 
 <nav class="toc-container" aria-label="目次">
   <h2 class="text-sm font-semibold text-gray-900 mb-4">目次</h2>
-  <ul class="toc-list space-y-2 text-sm">
-    {tocHeadings.map((heading) => (
+  <ul class="toc-list space-y-1 text-sm">
+    {tocHeadings.map((heading, index) => (
       <li 
         class={`toc-item toc-level-${heading.depth}`}
-        style={`padding-left: ${(heading.depth - 2) * 1}rem`}
+        style={`padding-left: ${(heading.depth - 2) * 1.5}rem`}
       >
         <a 
           href={`#${heading.slug}`}
-          class="toc-link block py-1 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+          class="toc-link group flex items-center gap-2 py-1.5 text-gray-600 hover:text-gray-900 transition-all duration-200"
           data-heading-slug={heading.slug}
         >
-          {heading.text}
+          {/* インジケーター */}
+          <span class="toc-indicator h-2 w-2 rounded-full bg-gray-300 group-hover:bg-gray-400 transition-all duration-200 flex-shrink-0"></span>
+          <span class="leading-relaxed">{heading.text}</span>
         </a>
       </li>
     ))}
@@ -40,21 +42,23 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
     @apply sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto;
   }
 
-  .toc-list {
-    @apply border-l-2 border-gray-200;
-  }
-
-  .toc-link {
-    @apply pl-4 border-l-2 border-transparent -ml-[2px];
-  }
-
-  .toc-link:hover {
-    @apply border-indigo-400;
-  }
-
   .toc-link.active {
-    @apply text-indigo-600 font-medium border-indigo-600;
+    @apply text-indigo-600 font-medium;
   }
+
+  .toc-link.active .toc-indicator {
+    @apply bg-indigo-600 scale-125;
+  }
+
+  /* 階層ごとのインジケータースタイル */
+  .toc-level-3 .toc-indicator {
+    @apply h-1.5 w-1.5;
+  }
+
+  .toc-level-4 .toc-indicator {
+    @apply h-1 w-1;
+  }
+
 
   /* スクロールバーのスタイリング */
   .toc-container::-webkit-scrollbar {

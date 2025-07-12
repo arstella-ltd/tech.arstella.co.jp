@@ -36,10 +36,18 @@ export default defineConfig({
       [
         rehypeAutolinkHeadings,
         {
-          behavior: 'wrap',
+          behavior: 'append',
           properties: {
-            className: ['anchor-link'],
+            className: ['anchor-icon'],
             ariaLabel: 'このセクションへのリンク',
+          },
+          content: {
+            type: 'element',
+            tagName: 'span',
+            properties: {
+              className: ['anchor-icon-symbol'],
+            },
+            children: [{ type: 'text', value: '#' }],
           },
         },
       ],
