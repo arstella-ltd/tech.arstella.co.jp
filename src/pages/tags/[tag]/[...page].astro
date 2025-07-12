@@ -1,37 +1,43 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Pagination from '../../../components/Pagination.astro';
 import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const posts = await getCollection('blog', ({ data }) => {
     return !data.draft;
   });
   
-  const categories = [...new Set(posts.map(post => post.data.category))];
+  const tags = [...new Set(posts.flatMap(post => post.data.tags))];
   
-  return categories.map(category => ({
-    params: { category },
-    props: {
-      posts: posts.filter(post => post.data.category === category)
-        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    }
-  }));
-}
+  return tags.flatMap(tag => {
+    const tagPosts = posts
+      .filter(post => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    
+    return paginate(tagPosts, {
+      params: { tag },
+      pageSize: 10
+    });
+  });
+};
 
-const { category } = Astro.params;
-const { posts } = Astro.props;
+const { tag } = Astro.params;
+const { page } = Astro.props as { page: any };
+const currentPage = page.currentPage;
 ---
 
-<BaseLayout title={`${category}`} description={`カテゴリー「${category}」の記事一覧`}>
+<BaseLayout title={`#${tag}${currentPage > 1 ? ` - ページ ${currentPage}` : ''}`} description={`タグ「${tag}」の記事一覧`}>
   <main>
     <section>
-      <div class="category-header">
-        <a href="/categories/" class="back-link">← カテゴリー一覧へ</a>
-        <h1>カテゴリー: {category}</h1>
-        <p class="post-count">{posts.length}件の記事</p>
+      <div class="tag-header">
+        <a href="/tags/" class="back-link">← タグ一覧へ</a>
+        <h1>タグ: #{tag}</h1>
+        <p class="post-count">{page.total}件の記事</p>
       </div>
       <ul>
-        {posts.map((post) => (
+        {page.data.map((post: any) => (
           <li>
             <a href={`/blog/${post.slug}/`}>
               <h4 class="title">{post.data.title}</h4>
@@ -39,17 +45,27 @@ const { posts } = Astro.props;
                 {post.data.pubDate.toLocaleDateString('ja-JP')}
               </p>
               <p class="description">{post.data.description}</p>
-              {post.data.tags.length > 0 && (
-                <div class="tags">
-                  {post.data.tags.map(tag => (
-                    <span class="tag">#{tag}</span>
-                  ))}
-                </div>
-              )}
+              <div class="meta">
+                <span class="category">カテゴリー: {post.data.category}</span>
+                {post.data.tags.length > 1 && (
+                  <div class="other-tags">
+                    他のタグ: 
+                    {post.data.tags.filter((t: string) => t !== tag).map((otherTag: string, index: number) => (
+                      <span>
+                        {index > 0 && ", "}
+                        <span class="tag">#{otherTag}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </a>
           </li>
         ))}
       </ul>
+      
+      {/* ページネーション */}
+      <Pagination page={page} baseUrl={`/tags/${encodeURIComponent(tag || '')}/`} />
     </section>
   </main>
 </BaseLayout>
@@ -65,7 +81,7 @@ const { posts } = Astro.props;
     padding: 0 1.5rem;
   }
   
-  .category-header {
+  .tag-header {
     margin-bottom: 3rem;
   }
   
@@ -137,20 +153,25 @@ const { posts } = Astro.props;
     line-height: 1.6;
   }
   
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  .meta {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+  
+  .category {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  
+  .other-tags {
+    display: inline;
   }
   
   .tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: #e9ecef;
     color: #495057;
-    border-radius: 9999px;
-    font-size: 0.875rem;
+    font-weight: 500;
   }
+  
   
   @media (max-width: 72rem) {
     main {
@@ -171,5 +192,6 @@ const { posts } = Astro.props;
     .title {
       font-size: 1.25rem;
     }
+    
   }
 </style>

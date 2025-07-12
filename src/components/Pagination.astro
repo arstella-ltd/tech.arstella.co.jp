@@ -1,0 +1,146 @@
+---
+export interface Props {
+  page: {
+    url: {
+      prev?: string;
+      next?: string;
+    };
+    currentPage: number;
+    lastPage: number;
+  };
+  baseUrl: string;
+}
+
+const { page, baseUrl } = Astro.props;
+const currentPage = page.currentPage;
+
+// ページ番号の生成ロジック
+type PageItem = { type: 'page'; value: number } | { type: 'ellipsis' };
+const pageNumbers: PageItem[] = [];
+for (let i = 1; i <= page.lastPage; i++) {
+  if (i === 1 || i === page.lastPage || (i >= currentPage - 2 && i <= currentPage + 2)) {
+    pageNumbers.push({ type: 'page', value: i });
+  } else if (i === currentPage - 3 || i === currentPage + 3) {
+    pageNumbers.push({ type: 'ellipsis' });
+  }
+}
+
+// 重複する省略記号を削除
+const filteredPageNumbers = pageNumbers.filter((item, index) => {
+  if (item.type === 'ellipsis' && index > 0 && pageNumbers[index - 1].type === 'ellipsis') {
+    return false;
+  }
+  return true;
+});
+---
+
+{page.lastPage > 1 && (
+  <nav class="pagination">
+    <div class="nav-buttons">
+      {page.url.prev && (
+        <a href={page.url.prev} class="btn">
+          ← 前へ
+        </a>
+      )}
+    </div>
+    
+    <div class="page-numbers">
+      {filteredPageNumbers.map((item) => (
+        item.type === 'page' ? (
+          <a
+            href={item.value === 1 ? baseUrl : `${baseUrl}${item.value}`}
+            class={`page-num ${item.value === currentPage ? 'active' : ''}`}
+          >
+            {item.value}
+          </a>
+        ) : (
+          <span class="ellipsis">...</span>
+        )
+      ))}
+    </div>
+    
+    <div class="nav-buttons">
+      {page.url.next && (
+        <a href={page.url.next} class="btn">
+          次へ →
+        </a>
+      )}
+    </div>
+  </nav>
+)}
+
+<style>
+  .pagination {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    color: #212529;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+  
+  .btn:hover {
+    background: #f8f9fa;
+  }
+  
+  .page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .page-num {
+    padding: 0.5rem 0.75rem;
+    min-width: 2.5rem;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    color: #212529;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .page-num:hover {
+    background: #f8f9fa;
+  }
+  
+  .page-num.active {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: white;
+  }
+  
+  .ellipsis {
+    padding: 0 0.25rem;
+    color: #6c757d;
+  }
+  
+  @media (max-width: 640px) {
+    .page-numbers {
+      display: none;
+    }
+    
+    .pagination {
+      justify-content: space-between;
+    }
+  }
+</style>

@@ -1,15 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Pagination from '../../components/Pagination.astro';
 import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
 
-const allPosts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const allPosts = await getCollection('blog', ({ data }) => {
+    return data.draft !== true;
+  });
+  
+  const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  
+  return paginate(posts, { pageSize: 10 });
+};
 
-const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const { page } = Astro.props as { page: any };
+const currentPage = page.currentPage;
 ---
 
-<BaseLayout title="Blog" description="Arstella Inc.の技術ブログ記事一覧">
+<BaseLayout title={currentPage > 1 ? `Blog - ページ ${currentPage}` : 'Blog'} description="Arstella Inc.の技術ブログ記事一覧">
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mb-12">
       <h1 class="text-4xl font-bold text-gray-900">Blog</h1>
@@ -17,7 +26,7 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
     </div>
 
     <div class="grid gap-8">
-      {posts.map((post) => (
+      {page.data.map((post: any) => (
         <article class="border-b pb-8 last:border-0">
           <div class="flex items-start justify-between">
             <div class="flex-1">
@@ -42,7 +51,7 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
                 </p>
                 {post.data.tags && post.data.tags.length > 0 && (
                   <div class="mt-4 flex flex-wrap gap-2">
-                    {post.data.tags.map((tag) => (
+                    {post.data.tags.map((tag: string) => (
                       <a href={`/tags/${encodeURIComponent(tag)}/`} class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800 hover:bg-indigo-200 transition-colors">
                         #{tag}
                       </a>
@@ -60,5 +69,8 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
         </article>
       ))}
     </div>
+
+    {/* ページネーション */}
+    <Pagination page={page} baseUrl="/blog/" />
   </div>
 </BaseLayout>
