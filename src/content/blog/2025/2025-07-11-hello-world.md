@@ -5,6 +5,7 @@ pubDate: 2025-07-11
 slug: 'hello-world'
 category: 'お知らせ'
 tags: ['announcement', 'blog']
+author: 'arstella-team'
 ---
 
 このブログでは、日々の開発で得た知見や技術的なノウハウ、新しい技術への取り組みなどを共有していきます。

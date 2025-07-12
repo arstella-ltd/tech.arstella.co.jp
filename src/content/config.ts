@@ -1,4 +1,16 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z, reference } from 'astro:content';
+
+const authors = defineCollection({
+  type: 'data',
+  schema: z.object({
+    name: z.string(),
+    avatar: z.string().optional(),
+    bio: z.string().optional(),
+    github: z.string().optional(),
+    twitter: z.string().optional(),
+    role: z.string().optional(),
+  }),
+});
 
 const blog = defineCollection({
   type: 'content',
@@ -17,7 +29,9 @@ const blog = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    // authorはauthorsコレクションへの参照
+    author: reference('authors').optional(),
   }),
 });
 
-export const collections = { blog };
+export const collections = { blog, authors };
