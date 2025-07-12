@@ -2,6 +2,9 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { remarkExtractHeadings } from './src/utils/remark-extract-headings.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,4 +29,20 @@ export default defineConfig({
       },
     }),
   ],
+  markdown: {
+    remarkPlugins: [remarkExtractHeadings],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap',
+          properties: {
+            className: ['anchor-link'],
+            ariaLabel: 'このセクションへのリンク',
+          },
+        },
+      ],
+    ],
+  },
 });

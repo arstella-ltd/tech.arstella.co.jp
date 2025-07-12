@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 見出しのアンカーリンクスタイル */
+.anchor-link {
+  @apply no-underline;
+}
+
+.anchor-link:hover {
+  @apply text-indigo-600;
+}
+
+/* 見出しのホバー時にリンクアイコンを表示 */
+.prose h2 .anchor-link::after,
+.prose h3 .anchor-link::after,
+.prose h4 .anchor-link::after {
+  content: '#';
+  @apply ml-2 text-gray-400 opacity-0 transition-opacity;
+}
+
+.prose h2:hover .anchor-link::after,
+.prose h3:hover .anchor-link::after,
+.prose h4:hover .anchor-link::after {
+  @apply opacity-100;
+}
+
 /* プロースタイル（ブログ記事用） */
 .prose h1 {
   @apply text-3xl font-bold mt-8 mb-4 text-gray-900;

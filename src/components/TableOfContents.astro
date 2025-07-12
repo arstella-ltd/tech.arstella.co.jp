@@ -1,0 +1,145 @@
+---
+export interface Heading {
+  depth: number;
+  text: string;
+  slug: string;
+}
+
+export interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// h1を除外し、h2から開始する目次を作成
+const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
+---
+
+<nav class="toc-container" aria-label="目次">
+  <h2 class="text-sm font-semibold text-gray-900 mb-4">目次</h2>
+  <ul class="toc-list space-y-2 text-sm">
+    {tocHeadings.map((heading) => (
+      <li 
+        class={`toc-item toc-level-${heading.depth}`}
+        style={`padding-left: ${(heading.depth - 2) * 1}rem`}
+      >
+        <a 
+          href={`#${heading.slug}`}
+          class="toc-link block py-1 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+          data-heading-slug={heading.slug}
+        >
+          {heading.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .toc-container {
+    @apply sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto;
+  }
+
+  .toc-list {
+    @apply border-l-2 border-gray-200;
+  }
+
+  .toc-link {
+    @apply pl-4 border-l-2 border-transparent -ml-[2px];
+  }
+
+  .toc-link:hover {
+    @apply border-indigo-400;
+  }
+
+  .toc-link.active {
+    @apply text-indigo-600 font-medium border-indigo-600;
+  }
+
+  /* スクロールバーのスタイリング */
+  .toc-container::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc-container::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+  }
+
+  .toc-container::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+</style>
+
+<script>
+  // スクロール連動機能
+  const observeHeadings = () => {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const headingElements = document.querySelectorAll('h2[id], h3[id], h4[id]');
+    
+    // Intersection Observer の設定
+    const observerOptions = {
+      rootMargin: '-80px 0px -80% 0px',
+      threshold: 0
+    };
+
+    let activeHeading: string | null = null;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          
+          // 現在のアクティブな見出しを更新
+          activeHeading = id;
+          
+          // すべてのリンクからactiveクラスを削除
+          tocLinks.forEach((link) => {
+            link.classList.remove('active');
+          });
+          
+          // 対応するリンクにactiveクラスを追加
+          const activeLink = document.querySelector(`[data-heading-slug="${id}"]`);
+          if (activeLink) {
+            activeLink.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    // すべての見出し要素を監視
+    headingElements.forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    // クリック時のスムーズスクロール
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href')?.slice(1);
+        if (targetId) {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+  };
+
+  // DOMContentLoadedとastro:page-loadの両方で実行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeHeadings);
+  } else {
+    observeHeadings();
+  }
+
+  // ページ遷移時にも実行（Astroのページ遷移対応）
+  document.addEventListener('astro:page-load', observeHeadings);
+</script>
