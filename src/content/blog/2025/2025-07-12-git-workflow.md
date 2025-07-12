@@ -2,6 +2,7 @@
 title: 'チーム開発を成功させるGitワークフロー'
 description: 'チーム開発において効率的なGitワークフローを確立するための方法論とベストプラクティスを解説します。'
 pubDate: 2025-07-12
+slug: 'git-workflow'
 heroImage: ''
 category: '開発プロセス'
 tags: ['Git', 'ワークフロー', 'チーム開発']

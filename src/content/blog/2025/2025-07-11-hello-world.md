@@ -2,6 +2,7 @@
 title: 'Hello World: Arstella Tech Blogへようこそ'
 description: 'Arstella Ltd.の技術ブログを開設しました。技術情報やノウハウを発信していきます。'
 pubDate: 2025-07-11
+slug: 'hello-world'
 category: 'お知らせ'
 tags: ['announcement', 'blog']
 ---

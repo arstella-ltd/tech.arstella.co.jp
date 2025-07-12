@@ -2,6 +2,7 @@
 title: 'AstroとTailwindCSSで技術ブログを構築する'
 description: 'Astro v5とTailwindCSSを使用して、高速でモダンな技術ブログを構築する方法を解説します。'
 pubDate: 2025-07-11
+slug: 'astro-tailwind-setup'
 category: 'Web開発'
 tags: ['astro', 'tailwindcss', 'static-site-generator']
 ---

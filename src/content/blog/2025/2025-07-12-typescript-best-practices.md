@@ -2,6 +2,7 @@
 title: 'TypeScriptでより安全なコードを書くためのベストプラクティス'
 description: 'TypeScriptを使った開発において、型安全性を高め、保守性の高いコードを書くためのベストプラクティスを紹介します。'
 pubDate: 2025-07-12
+slug: 'typescript-best-practices'
 heroImage: ''
 category: 'Web開発'
 tags: ['TypeScript', 'JavaScript', 'ベストプラクティス']
