@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.11.0"
+    "astro": "^5.11.0",
+    "astro-seo": "^0.8.4"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17",
