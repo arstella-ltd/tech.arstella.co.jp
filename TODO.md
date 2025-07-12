@@ -50,7 +50,7 @@
 
 ### SEO基本対策
 - [x] メタタグの設定（astro-seo）
-- [ ] sitemap.xmlの自動生成（@astrojs/sitemap）
+- [x] sitemap.xmlの自動生成（@astrojs/sitemap）
 - [x] robots.txtの設定
 
 ### ブログ機能の強化
