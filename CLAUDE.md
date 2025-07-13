@@ -13,3 +13,6 @@
 
 ## Build
 - ビルドはpnpm build
+
+## Design
+- デザインはTailwindCSSを使用すること
