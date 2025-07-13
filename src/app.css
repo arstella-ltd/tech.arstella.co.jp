@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* レスポンシブデザインのベーススタイル */
+@layer base {
+  /* スムーズスクロール */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* タッチデバイスでのタップハイライトを無効化 */
+  @media (hover: none) and (pointer: coarse) {
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+  
+  /* フォーカス時のアウトライン改善 */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-indigo-500;
+  }
+}
+
+/* レスポンシブユーティリティ */
+@layer utilities {
+  /* タッチフレンドリーなタップターゲット */
+  .tap-target {
+    @apply relative;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* セーフエリア対応（iPhone X以降） */
+  .safe-padding-x {
+    @apply px-4;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  
+  .safe-padding-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
 /* 見出しのアンカーアイコンスタイル */
 .anchor-icon {
   @apply ml-2 no-underline;
@@ -24,15 +65,15 @@
 
 /* プロースタイル（ブログ記事用） */
 .prose h1 {
-  @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  @apply text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-gray-900;
 }
 
 .prose h2 {
-  @apply text-2xl font-bold mt-8 mb-4 text-gray-900;
+  @apply text-xl sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-gray-900;
 }
 
 .prose h3 {
-  @apply text-xl font-bold mt-6 mb-3 text-gray-900;
+  @apply text-lg sm:text-xl font-bold mt-4 sm:mt-6 mb-2 sm:mb-3 text-gray-900;
 }
 
 .prose p {
@@ -56,7 +97,7 @@
 }
 
 .prose pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  @apply bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-lg overflow-x-auto mb-4 text-sm sm:text-base;
 }
 
 .prose pre code {
