@@ -12,15 +12,18 @@ const latestPosts = allPosts
 ---
 
 <BaseLayout title="Home">
-  <section class="relative overflow-hidden bg-gray-900">
+  <section class="hero-section relative overflow-hidden transition-colors duration-300">
+    <!-- 背景色レイヤー -->
+    <div class="absolute inset-0 bg-gray-50 dark:bg-gray-900"></div>
+    
     <!-- パーティクル背景 -->
     <div class="particles-bg absolute inset-0">
       <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
     </div>
     
     <!-- グラデーションオーバーレイ -->
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-purple-100/20 to-pink-100/30 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-pink-900/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent dark:from-gray-900/80 dark:via-transparent dark:to-transparent"></div>
     
     <!-- メインコンテンツ -->
     <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
@@ -28,10 +31,10 @@ const latestPosts = allPosts
         <!-- メインタイトル -->
         <div class="space-normal">
           <h1 class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl">
-            <span class="block text-white" style="font-family: var(--font-heading); letter-spacing: -0.03em;">
+            <span class="block text-gray-900 dark:text-white" style="font-family: var(--font-heading); letter-spacing: -0.03em;">
               Arstella
             </span>
-            <span class="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2" style="line-height: 1.1; padding-bottom: 0.15em;">
+            <span class="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mt-2" style="line-height: 1.1; padding-bottom: 0.15em;">
               Tech Blog
             </span>
           </h1>
@@ -39,10 +42,10 @@ const latestPosts = allPosts
         
         <!-- サブタイトル -->
         <div class="mx-auto max-w-3xl space-normal">
-          <p class="text-xl sm:text-2xl lg:text-3xl font-medium leading-relaxed text-gray-200" style="font-family: var(--font-heading); letter-spacing: -0.01em;">
+          <p class="text-xl sm:text-2xl lg:text-3xl font-medium leading-relaxed text-gray-700 dark:text-gray-200" style="font-family: var(--font-heading); letter-spacing: -0.01em;">
             エンジニアが技術的な知見や経験を共有する
           </p>
-          <p class="text-lg sm:text-xl text-gray-400 mt-4">
+          <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mt-4">
             最新の技術トレンドから実践的なノウハウまで、幅広い情報をお届けします
           </p>
         </div>
@@ -61,28 +64,28 @@ const latestPosts = allPosts
         </div>
         
         <!-- ソーシャルプルーフ -->
-        <div class="mt-16 pt-8 border-t border-gray-700">
-          <p class="text-sm text-gray-400 font-medium">
+        <div class="mt-16 pt-8 border-t border-gray-300 dark:border-gray-700">
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">
             最新の記事とノウハウをお届け
           </p>
           <div class="flex justify-center items-center space-x-8 mt-4">
             <div class="flex items-center space-x-2">
-              <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="h-5 w-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-sm font-medium text-gray-300">実践的な技術情報</span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">実践的な技術情報</span>
             </div>
             <div class="flex items-center space-x-2">
-              <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="h-5 w-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-sm font-medium text-gray-300">AI活用</span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">AI活用</span>
             </div>
             <div class="flex items-center space-x-2">
-              <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="h-5 w-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-sm font-medium text-gray-300">エンジニア目線</span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">エンジニア目線</span>
             </div>
           </div>
         </div>
@@ -90,14 +93,14 @@ const latestPosts = allPosts
     </div>
   </section>
 
-  <section class="py-16 sm:py-20 lg:py-24 bg-slate-50">
+  <section class="py-16 sm:py-20 lg:py-24 bg-slate-50 dark:bg-gray-900/50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- セクションヘッダー -->
       <div class="text-center mb-12 sm:mb-16">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold" style="font-family: var(--font-heading); color: var(--color-gray-900); letter-spacing: -0.02em;">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100" style="font-family: var(--font-heading); letter-spacing: -0.02em;">
           最新の記事
         </h2>
-        <p class="mt-4 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+        <p class="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           エンジニアの実践的な知見とノウハウを厳選してお届け
         </p>
       </div>
@@ -109,7 +112,7 @@ const latestPosts = allPosts
             <div class="card-content space-normal">
               <!-- メタ情報 -->
               <div class="flex flex-wrap items-center gap-3 text-sm">
-                <time datetime={post.data.pubDate.toISOString()} style="color: var(--color-gray-500);">
+                <time datetime={post.data.pubDate.toISOString()} class="text-gray-500 dark:text-gray-400">
                   {post.data.pubDate.toLocaleDateString('ja-JP')}
                 </time>
                 {post.data.category && (
@@ -125,7 +128,7 @@ const latestPosts = allPosts
                 <h3 class="blog-card-title">
                   {post.data.title}
                 </h3>
-                <p class="text-sm sm:text-base line-clamp-3" style="color: var(--color-gray-600); line-height: 1.6;">
+                <p class="text-sm sm:text-base line-clamp-3 text-gray-600 dark:text-gray-300" style="line-height: 1.6;">
                   {post.data.description}
                 </p>
               </div>
@@ -166,6 +169,10 @@ const latestPosts = allPosts
   const ctx = canvas.getContext('2d');
   
   if (ctx) {
+    // テーマを取得
+    function isDarkMode() {
+      return document.documentElement.classList.contains('dark');
+    }
     // キャンバスサイズ設定
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -189,7 +196,13 @@ const latestPosts = allPosts
     const connectionDistance = 120;
     
     // パーティクル生成
-    const colors = ['100, 149, 237', '147, 112, 219', '123, 104, 238', '186, 85, 211', '138, 43, 226'];
+    function getColors() {
+      return isDarkMode() 
+        ? ['100, 149, 237', '147, 112, 219', '123, 104, 238', '186, 85, 211', '138, 43, 226']
+        : ['59, 130, 246', '139, 92, 246', '236, 72, 153', '168, 85, 247', '99, 102, 241'];
+    }
+    
+    const colors = getColors();
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -258,7 +271,8 @@ const latestPosts = allPosts
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = `rgba(100, 149, 237, ${(1 - distance / connectionDistance) * 0.2})`;
+            const lineColor = isDarkMode() ? '100, 149, 237' : '59, 130, 246';
+            ctx.strokeStyle = `rgba(${lineColor}, ${(1 - distance / connectionDistance) * 0.2})`;
             ctx.stroke();
           }
         }
@@ -274,7 +288,8 @@ const latestPosts = allPosts
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(mouseX, mouseY);
-            ctx.strokeStyle = `rgba(147, 112, 219, ${(1 - mouseDistance / connectionDistance) * 0.5})`;
+            const mouseLineColor = isDarkMode() ? '147, 112, 219' : '139, 92, 246';
+            ctx.strokeStyle = `rgba(${mouseLineColor}, ${(1 - mouseDistance / connectionDistance) * 0.5})`;
             ctx.stroke();
           }
         }
@@ -284,5 +299,19 @@ const latestPosts = allPosts
     }
     
     animate();
+    
+    // テーマ変更を監視
+    const observer = new MutationObserver(() => {
+      // パーティクルの色を更新
+      const newColors = getColors();
+      particles.forEach((particle, i) => {
+        particle.color = newColors[i % newColors.length];
+      });
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
   }
 </script>

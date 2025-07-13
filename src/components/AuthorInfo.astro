@@ -22,29 +22,29 @@ const defaultAuthor = {
 const authorInfo = author || defaultAuthor;
 ---
 
-<div class="author-info mb-8 p-4 bg-gray-50 rounded-lg">
+<div class="author-info mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700">
   <div class="flex items-start gap-3">
     <div class="flex-shrink-0">
       {authorInfo.avatar ? (
         <img 
           src={authorInfo.avatar} 
           alt={authorInfo.name}
-          class="w-12 h-12 rounded-full bg-gray-200"
+          class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700"
         />
       ) : (
-        <div class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-          <span class="text-gray-600 text-lg font-semibold">
+        <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
+          <span class="text-gray-600 dark:text-gray-300 text-lg font-semibold">
             {authorInfo.name.charAt(0).toUpperCase()}
           </span>
         </div>
       )}
     </div>
     <div class="flex-1 min-w-0">
-      <h3 class="text-sm font-semibold text-gray-900 truncate">
+      <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
         {authorInfo.name}
       </h3>
       {authorInfo.bio && (
-        <p class="text-xs text-gray-600 mt-1 line-clamp-2">
+        <p class="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
           {authorInfo.bio}
         </p>
       )}
@@ -55,7 +55,7 @@ const authorInfo = author || defaultAuthor;
               href={`https://github.com/${authorInfo.github}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-500 hover:text-gray-700 transition-colors"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
               aria-label="GitHub"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@ const authorInfo = author || defaultAuthor;
               href={`https://twitter.com/${authorInfo.twitter}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-500 hover:text-gray-700 transition-colors"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
               aria-label="Twitter"
             >
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

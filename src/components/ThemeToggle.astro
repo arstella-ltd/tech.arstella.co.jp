@@ -1,0 +1,190 @@
+---
+---
+
+<div class="theme-toggle">
+  <button
+    id="theme-toggle-btn"
+    type="button"
+    class="relative inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+    aria-label="テーマを切り替え"
+  >
+    <!-- ライトモードアイコン -->
+    <svg class="theme-icon theme-icon-light h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+    </svg>
+    
+    <!-- ダークモードアイコン -->
+    <svg class="theme-icon theme-icon-dark h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+    </svg>
+    
+    <!-- システムアイコン -->
+    <svg class="theme-icon theme-icon-system h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  </button>
+  
+  <!-- テーマ選択メニュー -->
+  <div id="theme-menu" class="theme-menu hidden absolute right-0 mt-2 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800 dark:ring-gray-700">
+    <div class="py-1" role="menu" aria-orientation="vertical">
+      <button
+        class="theme-option flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        data-theme="light"
+        role="menuitem"
+      >
+        <svg class="mr-3 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+        </svg>
+        ライト
+      </button>
+      
+      <button
+        class="theme-option flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        data-theme="dark"
+        role="menuitem"
+      >
+        <svg class="mr-3 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+        ダーク
+      </button>
+      
+      <button
+        class="theme-option flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        data-theme="system"
+        role="menuitem"
+      >
+        <svg class="mr-3 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        システム
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .theme-toggle {
+    position: relative;
+  }
+  
+  .theme-menu {
+    position: absolute;
+    z-index: 50;
+    right: 0;
+    margin-top: 0.5rem;
+  }
+  
+  .theme-icon {
+    display: none;
+  }
+  
+  :global(html[data-theme="light"]) .theme-icon-light,
+  :global(html[data-theme="dark"]) .theme-icon-dark,
+  :global(html[data-theme="system"]) .theme-icon-system {
+    display: block;
+  }
+  
+  .theme-option[data-theme][aria-selected="true"] {
+    background-color: rgb(239 246 255);
+    color: rgb(59 130 246);
+  }
+  
+  :global(html.dark) .theme-option[data-theme][aria-selected="true"] {
+    background-color: rgb(30 58 138);
+    color: rgb(147 197 253);
+  }
+</style>
+
+<script>
+  // テーマ管理
+  type Theme = 'light' | 'dark' | 'system';
+  
+  function getTheme(): Theme {
+    const theme = localStorage.getItem('theme') as Theme;
+    return theme || 'system';
+  }
+  
+  function saveTheme(theme: Theme) {
+    localStorage.setItem('theme', theme);
+  }
+  
+  function getSystemTheme(): 'light' | 'dark' {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  
+  function applyTheme(theme: Theme) {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    
+    const actualTheme = theme === 'system' ? getSystemTheme() : theme;
+    
+    if (actualTheme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    
+    // アイコンの表示を更新
+    updateThemeIcon(theme);
+    
+    // メニューの選択状態を更新
+    updateMenuSelection(theme);
+  }
+  
+  function updateThemeIcon(theme: Theme) {
+    // メニューボタンのアイコンは CSS で制御
+  }
+  
+  function updateMenuSelection(theme: Theme) {
+    document.querySelectorAll('.theme-option').forEach(option => {
+      const optionTheme = option.getAttribute('data-theme');
+      option.setAttribute('aria-selected', optionTheme === theme ? 'true' : 'false');
+    });
+  }
+  
+  // 初期化
+  document.addEventListener('DOMContentLoaded', () => {
+    const theme = getTheme();
+    applyTheme(theme);
+    
+    // トグルボタンのクリックイベント
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const themeMenu = document.getElementById('theme-menu');
+    
+    if (toggleBtn && themeMenu) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        themeMenu.classList.toggle('hidden');
+      });
+      
+      // テーマ選択
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', () => {
+          const selectedTheme = option.getAttribute('data-theme') as Theme;
+          saveTheme(selectedTheme);
+          applyTheme(selectedTheme);
+          themeMenu.classList.add('hidden');
+        });
+      });
+      
+      // メニュー外クリックで閉じる
+      document.addEventListener('click', () => {
+        themeMenu.classList.add('hidden');
+      });
+      
+      themeMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+    
+    // システムテーマの変更を監視
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const currentTheme = getTheme();
+      if (currentTheme === 'system') {
+        applyTheme('system');
+      }
+    });
+  });
+  
+</script>

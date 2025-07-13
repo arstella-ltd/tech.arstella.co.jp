@@ -1,7 +1,8 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
-<header class="sticky top-0 z-50 border-b bg-white lg:static">
+<header class="sticky top-0 z-50 border-b bg-white dark:bg-gray-900 dark:border-gray-800 lg:static">
   <!-- 状態管理用のチェックボックス（ヘッダーの外に配置） -->
   <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" />
   
@@ -9,7 +10,7 @@
     <div class="flex h-16 items-center justify-between">
       <!-- ロゴ -->
       <div class="flex items-center">
-        <a href="/" class="logo-hover">
+        <a href="/" class="logo-hover dark:text-white">
           Arstella Tech Blog
         </a>
       </div>
@@ -35,55 +36,61 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </a>
+        <div class="ml-4">
+          <ThemeToggle />
+        </div>
       </div>
       
-      <!-- モバイルメニューボタン -->
-      <label for="mobile-menu-toggle" 
-             class="relative z-50 cursor-pointer p-2 lg:hidden"
-             aria-label="メニューを開く">
-        <span class="sr-only">メニュー</span>
-        <!-- ハンバーガーアイコン -->
-        <div class="hamburger-icon relative h-6 w-6">
-          <span class="line-1 absolute left-0 top-0 h-0.5 w-6 origin-center bg-gray-800 transition-all duration-300"></span>
-          <span class="line-2 absolute left-0 top-2.5 h-0.5 w-6 bg-gray-800 transition-all duration-300"></span>
-          <span class="line-3 absolute left-0 bottom-0 h-0.5 w-6 origin-center bg-gray-800 transition-all duration-300"></span>
-        </div>
-      </label>
+      <!-- モバイル用のボタン群 -->
+      <div class="flex items-center space-x-2 lg:hidden">
+        <ThemeToggle />
+        <label for="mobile-menu-toggle" 
+               class="relative z-50 cursor-pointer p-2"
+               aria-label="メニューを開く">
+          <span class="sr-only">メニュー</span>
+          <!-- ハンバーガーアイコン -->
+          <div class="hamburger-icon relative h-6 w-6">
+            <span class="line-1 absolute left-0 top-0 h-0.5 w-6 origin-center bg-gray-800 dark:bg-gray-200 transition-all duration-300"></span>
+            <span class="line-2 absolute left-0 top-2.5 h-0.5 w-6 bg-gray-800 dark:bg-gray-200 transition-all duration-300"></span>
+            <span class="line-3 absolute left-0 bottom-0 h-0.5 w-6 origin-center bg-gray-800 dark:bg-gray-200 transition-all duration-300"></span>
+          </div>
+        </label>
+      </div>
     </div>
   </nav>
   
   <!-- モバイルメニュー -->
-  <div class="fixed inset-x-0 top-16 z-50 -translate-y-[200%] bg-white shadow-lg transition-transform duration-300 
+  <div class="fixed inset-x-0 top-16 z-50 -translate-y-[200%] bg-white dark:bg-gray-900 shadow-lg transition-transform duration-300 
               peer-checked:translate-y-0 lg:hidden">
     <nav class="max-h-[calc(100vh-4rem)] overflow-y-auto">
       <div class="container mx-auto px-4 py-6">
         <div class="space-y-1">
           <a href="/" 
-             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 
-                    transition-colors hover:bg-gray-50 hover:text-gray-900">
+             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 
+                    transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             Home
           </a>
           <a href="/blog" 
-             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 
-                    transition-colors hover:bg-gray-50 hover:text-gray-900">
+             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 
+                    transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             Blog
           </a>
           <a href="/categories" 
-             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 
-                    transition-colors hover:bg-gray-50 hover:text-gray-900">
+             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 
+                    transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             Categories
           </a>
           <a href="/tags" 
-             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 
-                    transition-colors hover:bg-gray-50 hover:text-gray-900">
+             class="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 
+                    transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
             Tags
           </a>
-          <div class="my-2 border-t pt-2">
+          <div class="my-2 border-t dark:border-gray-700 pt-2">
             <a href="https://arstella.co.jp" 
                target="_blank" 
                rel="noopener"
                class="flex items-center rounded-lg px-4 py-3 text-base font-medium 
-                      text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900">
+                      text-gray-700 dark:text-gray-200 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
               Corporate Site
               <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 

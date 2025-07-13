@@ -46,6 +46,36 @@
   --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ダークモード用の変数 */
+.dark {
+  /* ブランドカラーパレット（ダークモード調整） */
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-secondary: #34d399;
+  --color-accent: #fbbf24;
+  
+  /* グレースケール（反転） */
+  --color-gray-50: #0f172a;
+  --color-gray-100: #1e293b;
+  --color-gray-200: #334155;
+  --color-gray-300: #475569;
+  --color-gray-400: #64748b;
+  --color-gray-500: #94a3b8;
+  --color-gray-600: #cbd5e1;
+  --color-gray-700: #e2e8f0;
+  --color-gray-800: #f1f5f9;
+  --color-gray-900: #f8fafc;
+  
+  /* 影システム（ダークモード） */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
 /* レスポンシブデザインのベーススタイル */
 @layer base {
   /* フォント設定 */
@@ -82,7 +112,7 @@
 @layer components {
   /* カードシステム */
   .card {
-    @apply bg-white rounded-xl border border-slate-200 overflow-hidden;
+    @apply bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-700 overflow-hidden;
     box-shadow: var(--shadow-sm);
     transition: var(--transition-smooth);
   }
@@ -144,11 +174,11 @@
   }
   
   .btn-secondary {
-    @apply btn text-gray-700 bg-white border border-gray-300;
+    @apply btn text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600;
   }
   
   .btn-secondary:hover:not(:disabled) {
-    @apply bg-gray-50 border-gray-400;
+    @apply bg-gray-50 dark:bg-gray-700 border-gray-400 dark:border-gray-500;
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
   }
@@ -290,15 +320,27 @@
     color: var(--color-gray-900, #0f172a);
   }
   
+  .dark .blog-card-title {
+    color: #f3f4f6;
+  }
+  
   .blog-card-title a {
     color: var(--color-gray-900, #0f172a);
     text-decoration: none;
     transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
+  .dark .blog-card-title a {
+    color: #f3f4f6;
+  }
+  
   .blog-card-title a:hover {
     color: var(--color-primary, #2563eb);
     text-decoration: none;
+  }
+  
+  .dark .blog-card-title a:hover {
+    color: #60a5fa;
   }
 }
 
@@ -324,7 +366,7 @@
 
 /* プロースタイル（ブログ記事用） */
 .prose {
-  @apply text-gray-700 leading-relaxed;
+  @apply text-gray-700 dark:text-gray-300 leading-relaxed;
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.7;
@@ -338,12 +380,20 @@
   line-height: 1.1;
 }
 
+.dark .prose h1 {
+  color: #f9fafb;
+}
+
 .prose h2 {
   font-family: var(--font-heading);
   @apply text-2xl sm:text-3xl lg:text-4xl font-bold mt-8 sm:mt-10 mb-4 sm:mb-5;
   color: var(--color-gray-900);
   letter-spacing: -0.015em;
   line-height: 1.2;
+}
+
+.dark .prose h2 {
+  color: #f9fafb;
 }
 
 .prose h3 {
@@ -354,15 +404,27 @@
   line-height: 1.3;
 }
 
+.dark .prose h3 {
+  color: #f9fafb;
+}
+
 .prose h4 {
   font-family: var(--font-heading);
   @apply text-lg sm:text-xl font-semibold mt-6 mb-3;
   color: var(--color-gray-800);
 }
 
+.dark .prose h4 {
+  color: #f3f4f6;
+}
+
 .prose p {
   @apply mb-6;
   color: var(--color-gray-700);
+}
+
+.dark .prose p {
+  color: #e5e7eb;
 }
 
 .prose p:last-child {
@@ -387,6 +449,10 @@
   @apply leading-relaxed;
 }
 
+.dark .prose li {
+  color: #e5e7eb;
+}
+
 .prose li::marker {
   color: var(--color-primary);
 }
@@ -399,6 +465,11 @@
   font-weight: 500;
 }
 
+.dark .prose code {
+  background-color: #374151;
+  color: #f9fafb;
+}
+
 .prose pre {
   font-family: var(--font-mono);
   @apply p-4 sm:p-6 rounded-xl overflow-x-auto mb-6;
@@ -406,6 +477,11 @@
   color: var(--color-gray-100);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--color-gray-800);
+}
+
+.dark .prose pre {
+  background-color: var(--color-gray-950, #030712);
+  border-color: var(--color-gray-800);
 }
 
 .prose pre code {
@@ -419,6 +495,12 @@
   background-color: var(--color-gray-50);
   color: var(--color-gray-700);
   border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.dark .prose blockquote {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border-color: #60a5fa;
 }
 
 .prose blockquote p {
@@ -441,9 +523,17 @@
   color: var(--color-gray-900);
 }
 
+.dark .prose strong {
+  color: #f9fafb;
+}
+
 .prose em {
   @apply italic;
   color: var(--color-gray-800);
+}
+
+.dark .prose em {
+  color: #f3f4f6;
 }
 
 .prose img {
@@ -468,14 +558,29 @@
   border-bottom: 2px solid var(--color-gray-200);
 }
 
+.dark .prose th {
+  background-color: #1f2937;
+  color: #f3f4f6;
+  border-bottom-color: #4b5563;
+}
+
 .prose td {
   @apply px-4 py-3;
   color: var(--color-gray-700);
   border-bottom: 1px solid var(--color-gray-200);
 }
 
+.dark .prose td {
+  color: #e5e7eb;
+  border-bottom-color: #374151;
+}
+
 .prose tbody tr:hover {
   background-color: var(--color-gray-50);
+}
+
+.dark .prose tbody tr:hover {
+  background-color: #1f2937;
 }
 
 /* プロースタイルの間隔調整 */

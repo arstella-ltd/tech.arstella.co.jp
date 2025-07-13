@@ -46,8 +46,8 @@ const headings = rawHeadings?.map(heading => ({
   <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
     <!-- モバイル用の目次（折りたたみ式） -->
     {headings && headings.length > 0 && (
-      <details class="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-4 lg:hidden">
-        <summary class="cursor-pointer font-semibold text-gray-900 marker:text-gray-500">
+      <details class="mb-8 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 lg:hidden">
+        <summary class="cursor-pointer font-semibold text-gray-900 dark:text-gray-100 marker:text-gray-500 dark:marker:text-gray-400">
           目次
         </summary>
         <nav class="mt-4">
@@ -63,21 +63,21 @@ const headings = rawHeadings?.map(heading => ({
           <!-- メタ情報 -->
           <div class="mb-6 flex flex-wrap items-center gap-3 text-sm">
             <time datetime={post.data.pubDate.toISOString()} 
-                  class="font-medium" style="color: var(--color-gray-500);">
+                  class="font-medium text-gray-500 dark:text-gray-300">
               {post.data.pubDate.toLocaleDateString('ja-JP')}
             </time>
             {post.data.updatedDate && (
               <>
-                <span style="color: var(--color-gray-300);">•</span>
+                <span class="text-gray-300 dark:text-gray-500">•</span>
                 <time datetime={post.data.updatedDate.toISOString()} 
-                      class="font-medium" style="color: var(--color-gray-500);">
+                      class="font-medium text-gray-500 dark:text-gray-300">
                   更新: {post.data.updatedDate.toLocaleDateString('ja-JP')}
                 </time>
               </>
             )}
             {post.data.category && (
               <>
-                <span style="color: var(--color-gray-300);">•</span>
+                <span class="text-gray-300 dark:text-gray-500">•</span>
                 <a href={`/categories/${encodeURIComponent(post.data.category)}/`} 
                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 hover:scale-105" 
                    style="background-color: var(--color-primary); color: white;">
@@ -88,14 +88,14 @@ const headings = rawHeadings?.map(heading => ({
           </div>
           
           <!-- タイトル -->
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6" 
-              style="font-family: var(--font-heading); color: var(--color-gray-900); letter-spacing: -0.02em;">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-gray-100" 
+              style="font-family: var(--font-heading); letter-spacing: -0.02em;">
             {post.data.title}
           </h1>
           
           <!-- 説明文 -->
-          <p class="text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8" 
-             style="color: var(--color-gray-600); font-family: var(--font-heading); letter-spacing: -0.01em;">
+          <p class="text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8 text-gray-600 dark:text-gray-300" 
+             style="font-family: var(--font-heading); letter-spacing: -0.01em;">
             {post.data.description}
           </p>
           
@@ -129,7 +129,7 @@ const headings = rawHeadings?.map(heading => ({
 
         <footer class="mt-16 sm:mt-20">
           <!-- 区切り線 -->
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-8"></div>
+          <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent mb-8"></div>
           
           <!-- ナビゲーション -->
           <nav class="flex flex-col space-y-6 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">

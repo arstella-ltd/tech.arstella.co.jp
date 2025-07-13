@@ -41,8 +41,24 @@ const {
       modifiedTime={modifiedTime}
       tags={tags}
     />
+    <script is:inline>
+      // テーマ初期化（フラッシュ防止）
+      (function() {
+        const theme = localStorage.getItem('theme') || 'system';
+        const root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+        
+        const actualTheme = theme === 'system' 
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : theme;
+        
+        if (actualTheme === 'dark') {
+          root.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <Header />
     <main class="flex-1">
       <slot />

@@ -16,7 +16,7 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
 ---
 
 <nav class="toc-container" aria-label="目次">
-  <h2 class="text-sm font-semibold text-gray-900 mb-4">目次</h2>
+  <h2 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">目次</h2>
   <ul class="toc-list space-y-1 text-sm">
     {tocHeadings.map((heading, index) => (
       <li 
@@ -25,11 +25,11 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
       >
         <a 
           href={`#${heading.slug}`}
-          class="toc-link group flex items-center gap-2 py-1.5 text-gray-600 hover:text-gray-900 transition-all duration-200"
+          class="toc-link group flex items-center gap-2 py-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
           data-heading-slug={heading.slug}
         >
           {/* インジケーター */}
-          <span class="toc-indicator h-2 w-2 rounded-full bg-gray-300 group-hover:bg-gray-400 transition-all duration-200 flex-shrink-0"></span>
+          <span class="toc-indicator h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-gray-400 dark:group-hover:bg-gray-500 transition-all duration-200 flex-shrink-0"></span>
           <span class="leading-relaxed">{heading.text}</span>
         </a>
       </li>
@@ -43,11 +43,11 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
   }
 
   .toc-link.active {
-    @apply text-indigo-600 font-medium;
+    @apply text-indigo-600 dark:text-indigo-400 font-medium;
   }
 
   .toc-link.active .toc-indicator {
-    @apply bg-indigo-600 scale-125;
+    @apply bg-indigo-600 dark:bg-indigo-400 scale-125;
   }
 
   /* 階層ごとのインジケータースタイル */
@@ -70,11 +70,11 @@ const tocHeadings = headings.filter(h => h.depth > 1 && h.depth <= 4);
   }
 
   .toc-container::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-full;
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
   }
 
   .toc-container::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400;
+    @apply bg-gray-400 dark:bg-gray-500;
   }
 </style>
 
