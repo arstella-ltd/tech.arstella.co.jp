@@ -2,11 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+/* カスタムプロパティ（CSS変数） */
+:root {
+  /* ブランドカラーパレット */
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-secondary: #10b981;
+  --color-accent: #f59e0b;
+  
+  /* 洗練されたグレースケール */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  
+  /* セマンティックカラー */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  /* 影システム */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* タイポグラフィ */
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+  
+  /* アニメーション */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 /* レスポンシブデザインのベーススタイル */
 @layer base {
-  /* スムーズスクロール */
+  /* フォント設定 */
   html {
     scroll-behavior: smooth;
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+  
+  /* 見出しフォント */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
   }
   
   /* タッチデバイスでのタップハイライトを無効化 */
@@ -18,7 +72,125 @@
   
   /* フォーカス時のアウトライン改善 */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-indigo-500;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+}
+
+/* プロフェッショナルなコンポーネント */
+@layer components {
+  /* カードシステム */
+  .card {
+    @apply bg-white rounded-xl border border-slate-200 overflow-hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-smooth);
+  }
+  
+  .card-hover {
+    @apply card;
+    transition: var(--transition-smooth);
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-gray-300);
+  }
+  
+  .card-interactive {
+    @apply card-hover cursor-pointer;
+  }
+  
+  .card-content {
+    @apply p-6;
+  }
+  
+  .card-header {
+    @apply pt-6 px-6 pb-4;
+  }
+  
+  .card-body {
+    @apply px-6 py-4;
+  }
+  
+  .card-footer {
+    @apply px-6 pt-4 pb-6;
+  }
+  
+  /* ボタンシステム */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium text-sm;
+    @apply transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-primary {
+    @apply btn text-white;
+    background-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .btn-primary:focus {
+    @apply ring-blue-500;
+  }
+  
+  .btn-secondary {
+    @apply btn text-gray-700 bg-white border border-gray-300;
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-gray-50 border-gray-400;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  /* リンクスタイル */
+  .link {
+    color: var(--color-primary, #2563eb);
+    transition: var(--transition-smooth, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    color: var(--color-primary-dark, #1d4ed8);
+    text-decoration: none;
+  }
+  
+  .link-subtle {
+    color: var(--color-gray-600, #475569);
+    transition: var(--transition-smooth, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+    text-decoration: none;
+  }
+  
+  .link-subtle:hover {
+    color: var(--color-primary, #2563eb);
+    text-decoration: none;
+  }
+  
+  /* グラディエントアクセント */
+  .gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  }
+  
+  .gradient-secondary {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #34d399 100%);
+  }
+  
+  /* テキストアクセント */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary, #2563eb) 0%, var(--color-secondary, #10b981) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* 標準プロパティは削除（WebKit系での競合を防ぐ） */
   }
 }
 
@@ -40,6 +212,89 @@
   
   .safe-padding-bottom {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  /* 影システム */
+  .shadow-custom-xs { box-shadow: var(--shadow-xs); }
+  .shadow-custom-sm { box-shadow: var(--shadow-sm); }
+  .shadow-custom-md { box-shadow: var(--shadow-md); }
+  .shadow-custom-lg { box-shadow: var(--shadow-lg); }
+  .shadow-custom-xl { box-shadow: var(--shadow-xl); }
+  .shadow-custom-2xl { box-shadow: var(--shadow-2xl); }
+  
+  /* スペーシングシステム（8pxベース） */
+  .space-micro { @apply space-y-1; }      /* 4px */
+  .space-tight { @apply space-y-2; }      /* 8px */
+  .space-snug { @apply space-y-3; }       /* 12px */
+  .space-normal { @apply space-y-4; }     /* 16px */
+  .space-relaxed { @apply space-y-6; }    /* 24px */
+  .space-loose { @apply space-y-8; }      /* 32px */
+  .space-extra { @apply space-y-12; }     /* 48px */
+  
+  /* 視覚的強調 */
+  .emphasis-primary {
+    @apply font-bold text-gray-900 text-lg;
+  }
+  
+  .emphasis-secondary {
+    @apply font-semibold text-gray-700;
+  }
+  
+  .emphasis-tertiary {
+    @apply font-medium text-gray-500 text-sm;
+  }
+  
+  /* タグのホバーエフェクト */
+  .tag-default {
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium;
+    background-color: var(--color-gray-100, #f1f5f9);
+    color: var(--color-gray-700, #334155);
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .tag-default:hover {
+    background-color: var(--color-primary, #2563eb);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm, 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06));
+  }
+  
+  /* ロゴのホバーエフェクト */
+  .logo-hover {
+    @apply text-xl font-bold;
+    font-family: var(--font-heading, 'Inter', system-ui, sans-serif);
+    color: var(--color-gray-900, #0f172a);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .logo-hover:hover {
+    background: linear-gradient(135deg, var(--color-primary, #2563eb) 0%, var(--color-secondary, #10b981) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* 標準プロパティは削除（WebKit系での競合を防ぐ） */
+    transform: scale(1.02);
+  }
+  
+  /* ブログカードのタイトルホバー */
+  .blog-card-title {
+    @apply text-lg sm:text-xl font-bold leading-tight;
+    font-family: var(--font-heading, 'Inter', system-ui, sans-serif);
+    color: var(--color-gray-900, #0f172a);
+  }
+  
+  .blog-card-title a {
+    color: var(--color-gray-900, #0f172a);
+    text-decoration: none;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .blog-card-title a:hover {
+    color: var(--color-primary, #2563eb);
+    text-decoration: none;
   }
 }
 
@@ -64,79 +319,175 @@
 }
 
 /* プロースタイル（ブログ記事用） */
+.prose {
+  @apply text-gray-700 leading-relaxed;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
 .prose h1 {
-  @apply text-2xl sm:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-gray-900;
+  font-family: var(--font-heading);
+  @apply text-3xl sm:text-4xl lg:text-5xl font-bold mt-8 sm:mt-12 mb-4 sm:mb-6;
+  color: var(--color-gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .prose h2 {
-  @apply text-xl sm:text-2xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4 text-gray-900;
+  font-family: var(--font-heading);
+  @apply text-2xl sm:text-3xl lg:text-4xl font-bold mt-8 sm:mt-10 mb-4 sm:mb-5;
+  color: var(--color-gray-900);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
 }
 
 .prose h3 {
-  @apply text-lg sm:text-xl font-bold mt-4 sm:mt-6 mb-2 sm:mb-3 text-gray-900;
+  font-family: var(--font-heading);
+  @apply text-xl sm:text-2xl lg:text-3xl font-bold mt-6 sm:mt-8 mb-3 sm:mb-4;
+  color: var(--color-gray-900);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.prose h4 {
+  font-family: var(--font-heading);
+  @apply text-lg sm:text-xl font-semibold mt-6 mb-3;
+  color: var(--color-gray-800);
 }
 
 .prose p {
-  @apply mb-4 leading-relaxed;
+  @apply mb-6;
+  color: var(--color-gray-700);
+}
+
+.prose p:last-child {
+  @apply mb-0;
+}
+
+.prose ul, .prose ol {
+  @apply mb-6 space-y-2;
+  padding-left: 1.5rem;
 }
 
 .prose ul {
-  @apply list-disc list-inside mb-4 space-y-2;
+  list-style-type: disc;
 }
 
 .prose ol {
-  @apply list-decimal list-inside mb-4 space-y-2;
+  list-style-type: decimal;
 }
 
 .prose li {
-  @apply text-gray-700;
+  color: var(--color-gray-700);
+  @apply leading-relaxed;
+}
+
+.prose li::marker {
+  color: var(--color-primary);
 }
 
 .prose code {
-  @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  font-family: var(--font-mono);
+  @apply px-2 py-1 rounded-md text-sm;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  font-weight: 500;
 }
 
 .prose pre {
-  @apply bg-gray-900 text-gray-100 p-3 sm:p-4 rounded-lg overflow-x-auto mb-4 text-sm sm:text-base;
+  font-family: var(--font-mono);
+  @apply p-4 sm:p-6 rounded-xl overflow-x-auto mb-6;
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-gray-800);
 }
 
 .prose pre code {
-  @apply bg-transparent p-0;
+  @apply bg-transparent p-0 text-sm;
+  color: inherit;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-gray-300 pl-4 italic my-4;
+  @apply border-l-4 pl-6 py-4 my-6 italic;
+  border-color: var(--color-primary);
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-700);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.prose blockquote p {
+  @apply mb-0;
 }
 
 .prose a {
-  @apply text-indigo-600 hover:text-indigo-700 underline;
+  color: var(--color-primary);
+  @apply underline decoration-2 underline-offset-2;
+  transition: var(--transition-smooth);
+}
+
+.prose a:hover {
+  color: var(--color-primary-dark);
+  @apply decoration-4;
 }
 
 .prose strong {
-  @apply font-bold text-gray-900;
+  @apply font-bold;
+  color: var(--color-gray-900);
 }
 
 .prose em {
   @apply italic;
+  color: var(--color-gray-800);
 }
 
-/* Tailwind Typography風のスタイル */
-.prose > * + * {
-  @apply mt-4;
+.prose img {
+  @apply rounded-xl mb-6;
+  box-shadow: var(--shadow-md);
 }
 
 .prose hr {
-  @apply border-gray-300 my-8;
+  @apply border-0 h-px my-8;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gray-300) 50%, transparent 100%);
 }
 
 .prose table {
-  @apply w-full border-collapse mb-4;
+  @apply w-full border-collapse mb-6 rounded-lg overflow-hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .prose th {
-  @apply border border-gray-300 px-4 py-2 bg-gray-50 font-semibold text-left;
+  @apply px-4 py-3 font-semibold text-left;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-900);
+  border-bottom: 2px solid var(--color-gray-200);
 }
 
 .prose td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply px-4 py-3;
+  color: var(--color-gray-700);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.prose tbody tr:hover {
+  background-color: var(--color-gray-50);
+}
+
+/* プロースタイルの間隔調整 */
+.prose > * + * {
+  margin-top: 0;
+}
+
+.prose > h2 + *,
+.prose > h3 + *,
+.prose > h4 + * {
+  @apply mt-4;
+}
+
+/* 読みやすさのための追加スタイル */
+.prose-reading {
+  max-width: 68ch;
+  font-size: 1.125rem;
+  line-height: 1.8;
 }
