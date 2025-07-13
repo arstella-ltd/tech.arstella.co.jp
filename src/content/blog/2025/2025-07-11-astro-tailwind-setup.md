@@ -7,11 +7,12 @@ category: 'Web開発'
 tags: ['astro', 'tailwindcss', 'static-site-generator']
 ---
 
-このブログは、Astro v5とTailwindCSSを使用して構築されています。今回は、その構築手順と選定理由について解説します。
+このブログは、Astro v5とTailwindCSSを使用して構築されています。
+今回は、その構築手順と選定理由について解説します。
 
 ## なぜAstroを選んだのか
 
-Astroを選んだ理由は以下の通りです：
+Astroを選んだ理由は以下の通りです。
 
 1. **高速なビルド**: 静的サイトジェネレーターとして非常に高速
 2. **Content Collections**: Markdownベースのコンテンツ管理が簡単
@@ -20,21 +21,21 @@ Astroを選んだ理由は以下の通りです：
 
 ## セットアップ手順
 
-### 1. Astroプロジェクトの初期化
+### Astroプロジェクトの初期化
 
 ```bash
 pnpm create astro@latest
 ```
 
-### 2. TailwindCSSの追加
+### TailwindCSSの追加
 
 ```bash
 pnpm astro add tailwind
 ```
 
-### 3. Content Collectionsの設定
+### Content Collectionsの設定
 
-`src/content/config.ts`でブログ記事のスキーマを定義：
+`src/content/config.ts`でブログ記事のスキーマを定義します。
 
 ```typescript
 import { defineCollection, z } from 'astro:content';
@@ -55,4 +56,5 @@ export const collections = { blog };
 
 ## まとめ
 
-AstroとTailwindCSSの組み合わせにより、高速でメンテナンスしやすい技術ブログを構築できました。今後も改善を続けていきます。
+AstroとTailwindCSSの組み合わせにより、高速でメンテナンスしやすい技術ブログを構築できました。
+今後も改善を続けていきます。
