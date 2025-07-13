@@ -191,6 +191,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     /* 標準プロパティは削除（WebKit系での競合を防ぐ） */
+    /* 文字切れ防止 */
+    line-height: 1.1;
+    padding-bottom: 0.1em;
+    display: inline-block;
   }
 }
 
