@@ -491,7 +491,6 @@
 
 /* 読みやすさのための追加スタイル */
 .prose-reading {
-  max-width: 68ch;
   font-size: 1.125rem;
   line-height: 1.8;
 }
