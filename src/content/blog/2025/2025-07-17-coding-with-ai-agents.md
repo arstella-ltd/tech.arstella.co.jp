@@ -2,7 +2,7 @@
 title: "AIコーディングエージェントと共に変わる開発スタイル"
 pubDate: "2025-07-17"
 slug: "coding-with-ai-agents"
-tags: ["AI", "CLI", "Claude", "Gemini", "開発環境"]
+tags: ["AI", "CLI", "Claude", "Gemini", "開発環境", "コーディングエージェント"]
 category: "開発ツール"
 description: "AIコーディングエージェントが開発の現場をどのように変えているのか、VS Code拡張型、エディター型、CLI型、自律型の4つのタイプを比較し、私自身の活用法を紹介します。"
 author: "arstella-team"
