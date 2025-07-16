@@ -1,6 +1,7 @@
 ## Git Workflow
 - タスクが1つ終わるごとにcommitして。
 - commitメッセージは日本語でconv commitの形式にして。
+- ブログ記事の変更を行なっている場合は `docs:` をつける。
 
 ## Communication
 - 日本語で会話して
