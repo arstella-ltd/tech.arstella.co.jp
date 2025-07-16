@@ -17,5 +17,8 @@
 ## Design
 - デザインはTailwindCSSを使用すること
 
+## Blog
+- ブログ記事は `src/content/blog/YYYY/` ディレクトリに配置すること（YYYYは年）
+
 ## Release
 - バージョンアップ時はCHANGELOGの更新、package.jsonの更新、TODO.mdの更新、をしてmainにマージした後にgit tag付けをして。
