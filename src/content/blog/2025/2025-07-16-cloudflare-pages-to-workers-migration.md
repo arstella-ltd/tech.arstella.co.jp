@@ -2,7 +2,7 @@
 title: "Cloudflare PagesからCloudflare Workersへ：静的アセットサポートによる新たな展開"
 description: "Cloudflareの基本からCloudflare Workers、Pagesの進化、そして2024年の静的アセットサポートによるPagesからWorkersへの移行について解説します"
 pubDate: "Jul 16 2025"
-author: "Tech Team"
+author: "arstella-team"
 category: "Infrastructure"
 tags: ["Cloudflare", "Workers", "Pages", "CDN", "サーバーレス"]
 ---
