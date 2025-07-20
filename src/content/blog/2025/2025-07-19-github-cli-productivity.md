@@ -49,15 +49,11 @@ GitHub CLIは、GitHubが公式に提供するコマンドラインツールで�
 # macOS (Homebrew)
 brew install gh
 
-# Ubuntu/Debian
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-sudo apt update
-sudo apt install gh
-
-# Windows (Scoop)
-scoop install gh
+# Windows (winget)
+winget install --id GitHub.cli
 ```
+
+Linux/Unixでのインストールは[公式ドキュメント](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)を参照してください。各ディストリビューションに対応したインストール方法が詳しく解説されています。
 
 ### 認証設定
 
@@ -138,80 +134,6 @@ gh pr view 123
 gh pr diff
 ```
 
-## 実践的な活用法：応用編
-
-### 1. コードレビューの効率化
-
-```bash
-# PR一覧を見やすく表示（カスタムフォーマット）
-gh pr list --json number,title,author,isDraft \
-  --jq '.[] | [.number, .title, .author.login, if .isDraft then "DRAFT" else "READY" end] | @tsv'
-
-# レビュー待ちのPRを確認
-gh pr list --search "is:pr is:open review-requested:@me"
-
-# PRにコメント
-gh pr comment 123 --body "LGTMです！マージして問題ありません。"
-
-# PRをapprove
-gh pr review 123 --approve --body "コード確認しました。問題ありません。"
-
-# 変更をリクエスト
-gh pr review 123 --request-changes --body "以下の点を修正してください：
-- エラーハンドリングの追加
-- テストケースの充実"
-```
-
-### 2. Issue管理の自動化
-
-```bash
-# 複数issueの一括操作
-gh issue list --label "bug" --json number \
-  --jq '.[].number' | xargs -I {} gh issue edit {} --add-label "in-progress"
-
-# issueのコメントを取得
-gh issue view 123 --comments
-
-# issueをPRに変換（開発開始時に便利）
-gh issue develop 123 --checkout
-```
-
-### 3. GitHub APIの活用
-
-```bash
-# リポジトリの統計情報取得
-gh api repos/:owner/:repo --jq '.stargazers_count, .forks_count'
-
-# 最近のリリース情報
-gh api repos/:owner/:repo/releases/latest
-
-# カスタムクエリでissue検索
-gh api search/issues -q "repo:owner/repo is:issue is:open created:>2024-01-01" \
-  --jq '.items[] | {number, title, created_at}'
-
-# PR のコメント一覧を取得
-gh api repos/:owner/:repo/pulls/123/comments
-```
-
-### 4. ワークフローの自動化
-
-```bash
-# 毎朝のルーティン：自分のタスク確認
-cat > ~/bin/morning-check.sh << 'EOF'
-#!/bin/bash
-echo "=== 自分にアサインされたIssue ==="
-gh issue list --assignee @me --state open
-
-echo -e "\n=== レビュー待ちのPR ==="
-gh pr list --search "is:pr is:open review-requested:@me"
-
-echo -e "\n=== 自分が作成したPRの状態 ==="
-gh pr list --author @me --state open
-EOF
-
-chmod +x ~/bin/morning-check.sh
-```
-
 ## AIツールとの連携
 
 ### Claude Codeでの活用例
@@ -246,86 +168,6 @@ gh pr create --title "feat: ユーザー認証機能の実装" \
 # Copilotに質問しながらghコマンドを実行
 gh copilot suggest "特定のユーザーが作成したissueを全て閉じる"
 gh copilot explain "gh pr checks"
-```
-
-## トラブルシューティング
-
-### よくある問題と解決方法
-
-1. **認証エラー**
-```bash
-# トークンの再認証
-gh auth refresh
-
-# スコープの追加
-gh auth refresh -s write:packages
-```
-
-2. **権限不足**
-```bash
-# 現在の権限確認
-gh auth status -t
-
-# 必要なスコープを追加
-gh auth login --scopes repo,workflow
-```
-
-3. **API制限**
-```bash
-# レート制限の確認
-gh api rate_limit
-
-# GraphQL APIを使用して効率化
-gh api graphql -f query='
-  query {
-    viewer {
-      pullRequests(first: 100, states: OPEN) {
-        nodes { number title }
-      }
-    }
-  }'
-```
-
-## 実践的なTips集
-
-### 1. エイリアスの活用
-
-```bash
-# ~/.gitconfigまたは~/.config/gh/config.yml に設定
-gh alias set prc 'pr create'
-gh alias set prl 'pr list --author @me'
-gh alias set issues 'issue list --assignee @me'
-
-# 複雑なコマンドもエイリアス化
-gh alias set review-requests 'pr list --search "is:pr is:open review-requested:@me"'
-```
-
-### 2. 出力フォーマットのカスタマイズ
-
-```bash
-# JSON出力をjqで加工
-gh issue list --json number,title,labels \
-  --jq '.[] | "\(.number): \(.title) [\(.labels | map(.name) | join(", "))]"'
-
-# TSV形式で出力（スプレッドシートに貼り付け可能）
-gh pr list --json number,title,author,createdAt \
-  --jq '.[] | [.number, .title, .author.login, .createdAt] | @tsv' > prs.tsv
-```
-
-### 3. シェルスクリプトとの連携
-
-```bash
-#!/bin/bash
-# 定期的なリポジトリメンテナンス
-
-# 古いブランチの確認
-echo "=== 3ヶ月以上更新されていないブランチ ==="
-gh api repos/:owner/:repo/branches --paginate \
-  --jq '.[] | select(.commit.commit.author.date < (now - 7776000 | strftime("%Y-%m-%dT%H:%M:%SZ"))) | .name'
-
-# マージ済みPRのブランチ削除
-gh pr list --state merged --json number,headRefName \
-  --jq '.[] | .headRefName' | xargs -I {} git push origin :{}
 ```
 
 ## まとめ
