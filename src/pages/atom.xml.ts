@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 export async function GET(context: APIContext) {
@@ -27,8 +27,17 @@ export async function GET(context: APIContext) {
     <name>Arstella Ltd.</name>
     <uri>${siteUrl.href}</uri>
   </author>
-  ${sortedPosts.map(post => {
+  ${await Promise.all(sortedPosts.map(async post => {
     const postUrl = new URL(`blog/${post.slug}/`, site);
+    let authorName = 'Arstella Team';
+    
+    if (post.data.author) {
+      const author = await getEntry(post.data.author);
+      if (author && author.data.name) {
+        authorName = author.data.name;
+      }
+    }
+    
     return `
   <entry>
     <title>${escapeXml(post.data.title)}</title>
@@ -38,12 +47,12 @@ export async function GET(context: APIContext) {
     <updated>${post.data.pubDate.toISOString()}</updated>
     <summary>${escapeXml(post.data.description)}</summary>
     <author>
-      <name>${post.data.author || 'Arstella Team'}</name>
+      <name>${escapeXml(authorName)}</name>
     </author>
     ${post.data.category ? `<category term="${escapeXml(post.data.category)}"/>` : ''}
     ${post.data.tags.map(tag => `<category term="${escapeXml(tag)}"/>`).join('')}
   </entry>`;
-  }).join('')}
+  })).then(entries => entries.join(''))}
 </feed>`;
 
   return new Response(xml, {
