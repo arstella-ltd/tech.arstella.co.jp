@@ -10,7 +10,14 @@ slug: "redmine-cli-introduction"
 
 ## はじめに
 
-Claude CodeやGemini CLIなどのAIエージェントを使っていて、気づいたことがあります。
+Redmineを使っていますか？
+私はたくさん使っています。
+
+プロジェクト管理、チケット管理、進捗確認。
+毎日のようにRedmineを開いては、チケットを確認し、ステータスを更新し、コメントを残す。
+この繰り返しです。
+
+そんな中、Claude CodeやGemini CLIなどのAIエージェントを使っていて、あることに気づきました。
 これらのエージェントは、GitHub上の操作を行う際、ほぼ必ず`gh`コマンド（GitHub CLI）を使っているのです。
 
 ```bash
