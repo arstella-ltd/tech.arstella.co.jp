@@ -3,8 +3,11 @@ import { getCollection, getEntry } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 export async function GET(context: APIContext) {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
   const posts = await getCollection('blog', ({ data }) => {
-    return !data.draft && data.pubDate <= new Date();
+    return !data.draft && data.pubDate <= tomorrow;
   });
 
   const site = context.site!;
