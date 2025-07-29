@@ -101,6 +101,20 @@ jobs:
 
 `v0.8.1`というタグから`0.8.1`というバージョン番号を抽出しています。
 
+### プレリリースの自動判定
+
+GitHub Actionsでは、バージョン番号に基づいて自動的にプレリリースを判定できます。
+
+```yaml
+- name: Create Release
+  uses: softprops/action-gh-release@v2
+  with:
+    prerelease: ${{ contains(steps.extract_version.outputs.version, '-') }}
+```
+
+バージョンに`-`が含まれる場合（例：`v0.8.2-beta`、`v1.0.0-rc1`）は自動的にプレリリースとして扱われます。
+これにより、正式版とベータ版を明確に区別できます。
+
 ## 配布ファイルの命名規則
 
 ### 一貫性の重要性
