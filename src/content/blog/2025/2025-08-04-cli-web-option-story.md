@@ -127,45 +127,6 @@ GitHub CLIのソースコードを調べてみると、`$BROWSER`環境変数を
 export BROWSER="/home/user/.vscode-server/bin/.../helpers/browser.sh"
 ```
 
-### 実装の工夫
-
-```csharp
-// 1. $BROWSER環境変数を優先的にチェック
-var browserEnv = Environment.GetEnvironmentVariable("BROWSER");
-if (!string.IsNullOrEmpty(browserEnv))
-{
-    // 環境変数で指定されたコマンドを実行
-    var parts = browserEnv.Split(' ', 2);
-    if (parts.Length == 1)
-    {
-        Process.Start(parts[0], url);
-    }
-    else
-    {
-        // コマンドに引数が含まれる場合
-        Process.Start(parts[0], $"{parts[1]} {url}");
-    }
-    return;
-}
-
-// 2. 通常の環境用のフォールバック処理
-// （ローカル開発時のデフォルト動作）
-```
-
-この実装により、様々な開発環境でブラウザを開けるようになりました。
-
-### リモート開発での設定例
-
-```bash
-# GitHub Codespacesの場合
-export BROWSER="gh cs ports visibility 3000:public && echo"
-
-# SSH経由でローカルマシンのブラウザを開く
-export BROWSER="ssh -t localhost 'open'"
-
-# カスタムスクリプトを使う
-export BROWSER="~/bin/remote-browser-open.sh"
-```
 
 ## CLIとWebのいいとこ取り
 
