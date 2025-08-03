@@ -125,10 +125,6 @@ GitHub CLIのソースコードを調べてみると、`$BROWSER`環境変数を
 ```bash
 # VSCodeが自動的に設定する例
 export BROWSER="/home/user/.vscode-server/bin/.../helpers/browser.sh"
-
-# ユーザーがカスタマイズする例
-export BROWSER="ssh -t localhost 'open'"
-export BROWSER="wslview"  # WSL環境の場合
 ```
 
 ### 実装の工夫
