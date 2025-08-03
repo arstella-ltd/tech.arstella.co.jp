@@ -85,7 +85,7 @@ Redmineのチケットには、以下のような情報が含まれます。
 
 ### リモート環境の制約
 
-VSCodeのRemote-SSH、Remote-Containers、GitHub Codespacesなど、リモート開発環境では以下の問題があります：
+VSCodeのRemote-SSH、Remote-Containers、GitHub Codespacesなど、リモート開発環境では以下の問題があります。
 
 1. **リモートマシンにはGUIがない**
    - サーバー環境にはブラウザがインストールされていない
@@ -108,7 +108,7 @@ VSCodeのRemote-SSH、Remote-Containers、GitHub Codespacesなど、リモート
 
 ### なぜ$BROWSER環境変数が必要だったか
 
-VSCodeのリモート開発環境では、ユーザーが特殊なコマンドを指定できる必要があります：
+VSCodeのリモート開発環境では、ユーザーが特殊なコマンドを指定できる必要があります。
 
 ```bash
 # ローカルマシンのブラウザを開くためのカスタムスクリプト
