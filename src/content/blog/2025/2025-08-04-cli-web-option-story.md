@@ -106,19 +106,29 @@ VSCodeのRemote-SSH、Remote-Containers、GitHub Codespacesなど、リモート
 
 リモート開発環境でも動作する方法を探った結果、`$BROWSER`環境変数を活用することにしました。
 
+### GitHub CLIから得たヒント
+
+実は、この解決策にたどり着いたきっかけは、GitHub CLIの`--web`オプションでした。
+
+VSCodeのリモート開発環境で`gh pr view --web`を実行したところ、驚いたことに**ローカルマシンのブラウザが起動した**のです。
+
+「え？リモート環境なのに、どうやってローカルのブラウザを開いているんだ？」
+
+GitHub CLIのソースコードを調べてみると、`$BROWSER`環境変数を確認していることが分かりました。
+そして、VSCodeがリモート開発環境で自動的に`$BROWSER`環境変数を設定していたのです。
+
 ### なぜ$BROWSER環境変数が必要だったか
 
-VSCodeのリモート開発環境では、ユーザーが特殊なコマンドを指定できる必要があります。
+この発見から、RedmineCLIでも同じアプローチを採用することにしました。
+`$BROWSER`環境変数を尊重することで、様々な環境でブラウザを開けるようになります。
 
 ```bash
-# ローカルマシンのブラウザを開くためのカスタムスクリプト
-export BROWSER="ssh-browser-open"
+# VSCodeが自動的に設定する例
+export BROWSER="/home/user/.vscode-server/bin/.../helpers/browser.sh"
 
-# VSCodeの組み込み機能を使う場合
-export BROWSER="code --open-url"
-
-# Remote-SSHでポートフォワーディングを使う場合
-export BROWSER="open-browser-via-localhost"
+# ユーザーがカスタマイズする例
+export BROWSER="ssh -t localhost 'open'"
+export BROWSER="wslview"  # WSL環境の場合
 ```
 
 ### 実装の工夫
