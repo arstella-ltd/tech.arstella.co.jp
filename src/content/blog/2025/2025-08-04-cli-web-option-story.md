@@ -187,4 +187,3 @@ Webの良さ
 
 - [RedmineCLI GitHubリポジトリ](https://github.com/arstella-ltd/RedmineCLI)
 - [GitHub CLI](https://cli.github.com/)
-- [WSLでのブラウザ起動について](https://learn.microsoft.com/ja-jp/windows/wsl/tutorials/gui-apps)
