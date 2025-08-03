@@ -1,7 +1,7 @@
 ---
-title: '--webオプション誕生秘話 - CLIの限界を超える'
+title: 'CLIツールに--webオプションを実装した理由'
 pubDate: 2025-08-04
-description: 'CLIツールに--webオプションを実装した理由と、OS別のブラウザ起動処理の泥臭い実装について。CLIとWebのいいとこ取りという発想の背景を紹介します。'
+description: 'RedmineCLIに--webオプションを実装した理由と、VSCodeリモート開発環境でのブラウザ起動の課題と解決策について紹介します。'
 author: 'arstella-team'
 tags: ["CLI", "ワークフロー", "UI/UX", "開発効率化"]
 category: "開発ツール"
@@ -10,12 +10,14 @@ slug: "cli-web-option-story"
 
 ## はじめに
 
-「CLIで全部やるのは無理がある」
+私は現在、RedmineCLIというツールを開発しています。
+Redmineのチケットをターミナルから操作できるCLIツールです。
 
-この言葉を心の中でつぶやいたことがある開発者は、私だけではないはずです。
+「最低限の機能から作り始める」という方針で開発を進めているため、まだ実装していない機能も多くあります。
+例えば、ガントチャート表示、Wikiページの閲覧など、Webブラウザで見た方が明らかに便利な機能は後回しにしています。
 
-CLIツールを開発していると、必ずぶつかる壁があります。
-それは「これ、どう考えてもWebブラウザで見たほうが分かりやすいよね」という瞬間です。
+しかし、ユーザーはこれらの機能も必要とします。
+そこで考えたのが「CLIで完結させることにこだわらず、必要に応じてWebブラウザを活用する」というアプローチでした。
 
 特に以下のようなケースでは、CLIの限界を痛感します。
 
@@ -70,113 +72,94 @@ Redmineのチケットには、以下のような情報が含まれます。
 「CLIで全部やろうとするのはやめよう。
 適材適所でいこう」
 
-## OS別ブラウザ起動の泥臭い実装
+## VSCodeのリモート開発環境での課題
 
-### 最初の甘い見積もり
+### 予想外の壁
 
-「ブラウザを開くだけでしょ？簡単じゃん」
+当初、ブラウザを開く処理は簡単だと思っていました。
+各OSに応じたコマンドを実行すれば良いだけだと。
 
-最初はそう思っていました。
-しかし、実際に実装してみると、OSごとの違いに苦労することになります。
+しかし、VSCodeのリモート開発環境で作業していた時、大きな問題に直面しました。
 
-### Windows：予想外の落とし穴
+**どのような方法を試しても、ブラウザが開かない。**
 
-Windowsでは`Process.Start(url)`で簡単に開けると思っていました。
+### リモート環境の制約
 
-```csharp
-// 最初の実装
-Process.Start("https://example.com");
-```
+VSCodeのRemote-SSH、Remote-Containers、GitHub Codespacesなど、リモート開発環境では以下の問題があります：
 
-しかし、.NET Coreでは`UseShellExecute`を明示的に設定する必要がありました。
+1. **リモートマシンにはGUIがない**
+   - サーバー環境にはブラウザがインストールされていない
+   - X11フォワーディングも設定されていない場合が多い
 
-```csharp
-// 修正後
-var startInfo = new ProcessStartInfo
-{
-    FileName = url,
-    UseShellExecute = true
-};
-Process.Start(startInfo);
-```
+2. **ローカルマシンとの連携が難しい**
+   - リモートマシンからローカルのブラウザを起動する標準的な方法がない
+   - SSHトンネリング経由でも直接的な制御は困難
 
-さらに、一部の環境では既定のブラウザが正しく起動しない問題も...
+3. **開発環境の多様性**
+   - Docker内での開発
+   - WSL2での開発
+   - クラウド上のVMでの開発
 
-### macOS：xdg-openがない世界
+これらの環境すべてに対応する必要がありました。
 
-Linuxで使える`xdg-open`がmacOSには存在しません。
-代わりに`open`コマンドを使う必要があります。
+## $BROWSER環境変数という解決策
 
-```csharp
-if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-{
-    Process.Start("open", url);
-}
-```
+リモート開発環境でも動作する方法を探った結果、`$BROWSER`環境変数を活用することにしました。
 
-しかし、ここにも罠が。
-URLに特殊文字が含まれている場合、適切にエスケープしないと失敗します。
+### なぜ$BROWSER環境変数が必要だったか
 
-### Linux：ディストリビューションの多様性
-
-Linuxが一番複雑でした。
-
-```csharp
-// 様々なブラウザ起動コマンドを試す
-string[] commands = { "xdg-open", "gnome-open", "kde-open" };
-foreach (var cmd in commands)
-{
-    try
-    {
-        Process.Start(cmd, url);
-        return;
-    }
-    catch
-    {
-        // 次のコマンドを試す
-    }
-}
-```
-
-WSL環境では更に複雑で、Windows側のブラウザを開く必要があります。
-
-## $BROWSER環境変数という救世主
-
-試行錯誤の末、たどり着いたのが`$BROWSER`環境変数の活用でした。
+VSCodeのリモート開発環境では、ユーザーが特殊なコマンドを指定できる必要があります：
 
 ```bash
-# ユーザーが好きなブラウザを指定
-export BROWSER="firefox"
-export BROWSER="/usr/bin/chromium-browser"
+# ローカルマシンのブラウザを開くためのカスタムスクリプト
+export BROWSER="ssh-browser-open"
+
+# VSCodeの組み込み機能を使う場合
+export BROWSER="code --open-url"
+
+# Remote-SSHでポートフォワーディングを使う場合
+export BROWSER="open-browser-via-localhost"
 ```
 
-実装はこうなりました。
+### 実装の工夫
 
 ```csharp
-// 1. $BROWSER環境変数をチェック
+// 1. $BROWSER環境変数を優先的にチェック
 var browserEnv = Environment.GetEnvironmentVariable("BROWSER");
 if (!string.IsNullOrEmpty(browserEnv))
 {
-    Process.Start(browserEnv, url);
+    // 環境変数で指定されたコマンドを実行
+    var parts = browserEnv.Split(' ', 2);
+    if (parts.Length == 1)
+    {
+        Process.Start(parts[0], url);
+    }
+    else
+    {
+        // コマンドに引数が含まれる場合
+        Process.Start(parts[0], $"{parts[1]} {url}");
+    }
     return;
 }
 
-// 2. OS別のデフォルト処理
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-{
-    // Windows処理
-}
-else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-{
-    // macOS処理
-}
-else
-{
-    // Linux処理
-}
+// 2. 通常の環境用のフォールバック処理
+// （ローカル開発時のデフォルト動作）
 ```
 
-この実装により、ユーザーは自分の環境に合わせて柔軟に設定できるようになりました。
+この実装により、様々な開発環境でブラウザを開けるようになりました。
+
+### リモート開発での設定例
+
+```bash
+# GitHub Codespacesの場合
+export BROWSER="gh cs ports visibility 3000:public && echo"
+
+# SSH経由でローカルマシンのブラウザを開く
+export BROWSER="ssh -t localhost 'open'"
+
+# カスタムスクリプトを使う
+export BROWSER="~/bin/remote-browser-open.sh"
+```
 
 ## CLIとWebのいいとこ取り
 
@@ -207,6 +190,8 @@ redmine issue view 123 --web
 
 「$BROWSER環境変数でブラウザを指定できるのが地味に嬉しい」
 
+「リモート開発環境でも動くのが助かる！」
+
 特に嬉しかったのは、以下のフィードバックです。
 
 「CLIツールなのに、無理にCLIで完結させようとしていないのがいい。
@@ -228,9 +213,9 @@ GitHub CLIの`--web`オプションは、多くのユーザーに受け入れら
 
 ### 環境の多様性を受け入れる
 
-OS別の処理は面倒ですが、避けて通れません。
-しかし、`$BROWSER`環境変数のような標準的な仕組みを活用することで、
-実装の複雑さを軽減できます。
+リモート開発環境、コンテナ、WSL、SSH接続など、現代の開発環境は多様化しています。
+`$BROWSER`環境変数のような柔軟な仕組みを用意することで、
+様々な環境でツールが動作するようになります。
 
 ## まとめ
 
