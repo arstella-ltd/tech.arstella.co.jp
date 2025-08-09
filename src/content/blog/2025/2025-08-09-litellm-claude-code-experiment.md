@@ -14,6 +14,8 @@ Claude Code ActionsってClaude専用のツールなんですが、「LiteLLMプ
 
 結果的に、AIモデルの個性が爆発する面白い実験になったので、その様子をお伝えします。
 
+詳細な実験レポートは[GitHubリポジトリ](https://github.com/arstella-ltd/claude-code-actions-litellm-experiment/blob/main/REPORT.md)で公開しています。
+
 ## 実験の背景：なぜ他のモデルで試すの？
 
 そもそもなんでClaude専用のツールを他のモデルで動かそうとしたのか。理由はいくつかあります。
@@ -38,7 +40,7 @@ Claude Code ActionsってClaude専用のツールなんですが、「LiteLLMプ
 今回の実験に参加してもらったのは、この5モデルです。
 
 - **sonnet** - Claude家の優等生（本命）
-- **gpt-5** - OpenAIの架空モデル（存在しないけど試してみた）
+- **gpt-5** - OpenAIの最新モデル（発表されたばかり）
 - **glm-4.5** - 中国発のAIモデル
 - **gpt-oss-120b** - オープンソースの大型モデル
 - **gemini-2.5-pro** - Googleの最新モデル
@@ -63,7 +65,7 @@ Claude Code ActionsってClaude専用のツールなんですが、「LiteLLMプ
 正確性: 100%（できた分は）
 ```
 
-存在しないはずのgpt-5ですが、なぜか動きました（謎）。ただし、めちゃくちゃ遅い。コーヒー飲んで待つレベル。最後の複雑なタスクは諦めちゃいました。
+発表されたばかりのgpt-5、期待値は高かったんですが、めちゃくちゃ遅い。コーヒー飲んで待つレベル。最後の複雑なタスクは諦めちゃいました。
 
 ### 🥉 3位：glm-4.5（時間感覚がバグってる）
 
