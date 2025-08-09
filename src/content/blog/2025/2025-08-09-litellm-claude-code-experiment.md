@@ -1,5 +1,5 @@
 ---
-title: "LiteLLMプロキシ経由でClaude Codeを他モデルで動かす実験"
+title: "LiteLLMプロキシ経由でClaude Code Actionsを他モデルで動かす実験"
 pubDate: 2025-08-09
 description: "Claude Code ActionsをLiteLLMプロキシ経由で色々なAIモデルで動かしてみたら、予想外に面白い結果になった話。"
 author: "arstella-team"
